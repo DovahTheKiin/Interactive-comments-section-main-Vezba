@@ -1,0 +1,385 @@
+:root {
+    --grayish-blue-200:hsl(239, 57%, 85%);
+    --blue-500:hsl(238, 40%, 52%);
+    --pale-red-200:hsl(357, 100%, 86%);
+    --red-400:hsl(358, 79%, 66%);
+
+    --white-100:hsl(0, 0%, 100%);
+    --gray-100:hsl(228, 33%, 97%);
+    --gray-200:hsl(223, 19%, 93%);
+    --grayish-blue-300:hsl(211, 10%, 45%);
+    --blue-800:hsl(212, 24%, 26%);
+}
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+}
+body {
+    font-family: 'Rubik', sans-serif;
+    position: relative;
+}
+button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    font-family: 'Rubik', sans-serif;
+}
+textarea {
+    line-height: 1.4;
+}
+.reply-btn:hover, .send-btn:hover, .delete-btn:hover, .edit-btn:hover {
+    opacity: 0.4;
+}
+.main {
+    padding: 2rem clamp(1rem, 4vw, 2.5rem);
+    /* padding: 2rem 1rem; */
+    background-color: var(--gray-100);
+}
+/* .comment-section {
+    margin-bottom: 1rem;
+} */
+.comment-box {
+    position: relative;
+    background-color: var(--white-100);
+    border-radius: 5px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+.comment {
+    margin-bottom: 1.2rem;
+}
+.comment-info {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 1.2rem;
+}
+.profile-picture {
+    height: 35px;
+    width: 35px;
+}
+.profile-name {
+    font-weight: 500;
+    color: var(--blue-800);
+}
+.time-posted {
+    color: var(--grayish-blue-300);
+}
+.comment-content {
+    color: var(--grayish-blue-300);
+    line-height: 1.4;
+}
+.upvote-downvote {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--gray-100);
+    border-radius: 10px;
+    width: fit-content;
+    padding: 0.5rem 0.7rem;
+    width: 87.31px;
+}
+.upvote-btn, .downvote-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.upvote-btn:hover svg path, .downvote-btn:hover svg path {
+    opacity: 1 !important;
+    fill: var(--blue-500);
+}
+.up-active svg path, .down-active svg path {
+    fill: var(--blue-500);
+}
+.upvote-downvote-number {
+    color: var(--blue-500);
+    font-weight: 500;
+}
+.reply-btn {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    color: var(--blue-500);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    font-size: 0.92rem;
+}
+.reply-icon {
+    margin-right: 0.3rem;
+}
+.comment-reply {
+    border-left: 2px solid var(--gray-200);
+}
+.comment-reply-reply {
+    margin-bottom: 0.7rem;
+    transform: translateY(-0.5rem);
+}
+.reply-comment {
+    margin-left: clamp(1rem, 4vw, 2.5rem);
+    /* margin-left: 1rem; */
+}
+.comment-reply-reply {
+    margin-left: 0rem;
+    /* border-left: 2px solid var(--gray-200); */
+}
+.at-span {
+    color: var(--blue-500);
+    font-weight: 500;
+}
+.delete-edit {
+    position: absolute;
+    bottom: 1.6rem;
+    right: 1.6rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:0.7rem;
+}
+.delete-btn, .edit-btn {
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:0.4rem;
+    font-weight: 500;
+    font-size: 0.92rem;
+}
+.delete-span {
+    color: var(--red-400);
+}
+.edit-span {
+    color: var(--blue-500);
+}
+.post-comment {
+    position: relative;
+    padding: 1rem;
+    border-radius: 5px;
+    background-color: var(--white-100);
+}
+.add-comment {
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    width: 100%;
+    padding: 1rem;
+    font-size: 0.920rem;
+    font-family: 'Rubik', sans-serif;
+    min-height: 100px;
+    margin-bottom: 1rem;
+    resize: none;
+}
+.send-btn {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    background-color: var(--blue-500);
+    font-size: 0.8250rem;
+    padding: 0.7rem 1.5rem;
+    color: var(--white-100);
+    border-radius: 6px;
+}
+.cancel-btn {
+    position: absolute;
+    bottom: 0.850rem;
+    right: 7.575rem;
+    color: var(--blue-500);
+    font-size: 0.8250rem;
+    padding: 0.675rem 0rem;
+    font-weight: 500;
+    margin-bottom: 2px;
+}
+.you {
+    background-color: var(--blue-500);
+    border-radius: 2px;
+    color: var(--white-100);
+    padding: 0.2rem 0.4rem;
+    text-transform: lowercase;
+    font-size: 0.7rem;
+    transform: translateX(-0.3rem);
+}
+.overflow-none {
+    overflow: hidden;
+}
+.black-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #333;
+    opacity: 0.6;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+.delete-comment-container {
+    position: fixed;
+    width: 100%;
+    height: 100dvh;
+    z-index: 3;
+}
+.delete-comment {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    width: 90%;
+    border-radius: 10px;
+    padding: 1.7rem;
+    display: grid;
+    gap: 1.2rem;
+    background-color: var(--white-100);
+    max-width: 363px;
+}
+.delete-comment h2 {
+    color: var(--blue-800);
+    font-weight: 500;
+    font-size: 1.3rem;
+}
+.delete-comment p {
+    line-height: 1.4;
+    color: var(--grayish-blue-300);
+}
+.delete-comment-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+.delete, .cancel {
+    color: var(--white-100);
+    /* padding: 0.9rem 1.250rem; */
+    padding: 0.9rem clamp(1.250rem, 3vw, 1.7rem);
+    border-radius: 7px;
+    font-size: 1rem;
+    font-weight: 400;
+}
+.cancel {
+    background-color: var(--grayish-blue-300);
+}
+.delete {
+    background-color: var(--red-400);
+}
+.edit-comment {
+    width: 100%;
+}
+@media (min-width: 700px) {
+    body {
+        width: 100%;
+        min-height: 100dvh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: var(--gray-100);
+    }
+    .main {
+        max-width: 795px;
+    }
+    .comment-box {
+        display: flex;
+        flex-direction: row-reverse;
+        gap: 1.5rem;
+        padding: 1.5rem;
+        margin-bottom: 1.2rem;
+    }
+    .upvote-downvote {
+        flex-direction: column;
+        width: fit-content;
+        height: 100px;
+        padding: 1rem 0.7rem;
+    }
+    .upvote-downvote-number {
+        text-align: center;
+        /* width: 17.31px; */
+    }
+    .reply-btn {
+        top: 1.5rem;
+        right: 1.5rem;
+        bottom: initial;
+    }
+    .delete-edit {
+        top: 1.6rem;
+        bottom: initial;
+    }
+    .comment-info {
+        margin-bottom: 0.8rem;
+    }
+    .comment {
+        margin-bottom: 0rem;
+    }
+    .comment-reply {
+        /* margin-left: 2.5rem; */
+        margin-left: clamp(1rem, 4vw, 2.5rem);
+    }
+    /* .comment-reply-reply {
+        margin-left: clamp(1rem, 4vw, 2.5rem);
+    } */
+    /* .reply-comment {
+        margin-left:2.5rem;
+    } */
+    .post-comment {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 1rem;
+        padding: 1.5rem;
+    }
+    .grid-pp {
+        width: 42px;
+        height: 42px;
+    }
+    .myForm {
+        display: flex;
+        gap: 1rem;
+        order: 2;
+    }
+    .add-comment {
+        margin-bottom: 0rem;
+    }
+    .send-btn {
+        position: relative;
+        bottom: auto;
+        right: auto;
+        height: 42px;
+        font-size: 0.9rem;
+        padding: 0.8rem 1.7rem;
+    }
+    .form-btn-section {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 1rem;
+    }
+    .cancel-btn {
+        font-size: 0.9rem;
+        padding: 0.675rem 1.575rem;
+        font-weight: 500;
+        margin-bottom: 2px;
+        position: relative;
+        bottom: initial;
+        right: initial;
+    }
+    /* .cancel-btn:hover {
+        box-shadow: 0 0 0 2px var(--blue-500);
+        border-radius: 6px;
+    } */
+    .user-comment-box {
+        display: grid;
+        grid-template-columns: auto 1fr;
+    }
+    .user-comment-grid {
+        order: 2;
+        display: grid;
+    }
+    .update-btn {
+        margin-top: 0.8rem;
+        width: fit-content;
+        justify-self: end;
+    }
+}
+
+/* JS CLASSES */
+
+.hidden {
+    display: none;
+}
