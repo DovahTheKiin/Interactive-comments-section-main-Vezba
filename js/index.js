@@ -1,3 +1,4 @@
+const mainMain = document.querySelector(".main")
 const main = document.querySelector(".comments-container")
 const userContainer = document.querySelector(".user-container")
 
@@ -6,6 +7,9 @@ fetch("./data.json")
         return response.json();
     })
     .then(function (data) {
+    let commentsContainer;
+    commentsContainer = document.createElement('div');
+    commentsContainer.classList.add('comments-container-maybe');
     userContainer.innerHTML = `
         <section class="post-comment post-new-comment">
             <form action="#" class="myForm">
@@ -112,7 +116,7 @@ fetch("./data.json")
             `;
             }
         }
-        out += `
+        commentsContainer.innerHTML += `
         <section class="comment-section main-comment ${comment.id}">
             <div class="comment-box">
                 <div class="comment">
@@ -160,8 +164,11 @@ fetch("./data.json")
             </div>
         </section>
         `;
+        repliesOut = "";
     }
-    main.innerHTML = out;
+    mainMain.prepend(commentsContainer);
+    // main.innerHTML = out;
+}).then(function () {
     mainScript();
 })
 
@@ -213,9 +220,11 @@ for(let i=0;i<replyCommentButton.length;i++) {
         let userUsernameValue = userUsername.innerHTML;
         let userPictureValue = userProfilePicture.src;
         let dud = addReply[i].value;
+        let appendReply;
+        appendReply = document.createElement('div');
         replyTextArea[i].classList.add("hidden");
         commentReply[i].classList.remove("hidden");
-        commentReply[i].innerHTML += `
+        appendReply.innerHTML += `
         <section class="comment-section reply-comment user-comment user-posted-reply">
                     <div class="comment-box user-comment-box">
                         <div class="comment user-comment-grid">
@@ -226,7 +235,7 @@ for(let i=0;i<replyCommentButton.length;i++) {
                                 <p class="time-posted">now</p>
                             </div>
                             <div class="comment-content user-comment-content">
-                                <p class="edited-comment">
+                                <p class="edited-comment user-edited-comment">
                                 <span class="at-span user-reply-at user-at-span"></span> <span class="user-comment-content-p user-content-span">${dud}</span>
                                 </p>
                                 <textarea name="edit-comment" id="edit-comment" class="add-comment edit-comment hidden">
@@ -249,43 +258,24 @@ for(let i=0;i<replyCommentButton.length;i++) {
                             </button>
                         </div>
                         <div class="delete-edit">
-                            <button class="delete-btn"><img src="images/icon-delete.svg" alt="Delete Icon"><span class="delete-span">Delete</span></button>
-                            <button class="edit-btn"><img src="images/icon-edit.svg" alt="Edit Icon"><span class="edit-span">Edit</span></button>
+                            <button class="delete-btn delete-btn-user"><img src="images/icon-delete.svg" alt="Delete Icon"><span class="delete-span">Delete</span></button>
+                            <button class="edit-btn user-edit-button"><img src="images/icon-edit.svg" alt="Edit Icon"><span class="edit-span">Edit</span></button>
                         </div>
                     </div>
                 </section>
         `;
-        upvotedownvoteButton();
-        editFunction();
+        commentReply[i].appendChild(appendReply);
     })
 }
 
-
 let commentSectionNumber = 0;
 
-// for(let i=0;i<deleteButton.length;i++) {
-//     deleteButton[i].addEventListener('click', () => {
-//         blackBg.classList.remove("hidden");
-//         deleteComment.classList.remove("hidden");
-//         body.classList.add("overflow-none");
-//         commentSectionNumber = i;
-//     })
-// }
-// cancelButton.addEventListener('click', () => {
-//     blackBg.classList.add("hidden");
-//     deleteComment.classList.add("hidden");
-//     body.classList.remove("overflow-none");
-// })
-// deleteConfirmButton.addEventListener('click', () => {
-//     for(let i=0;i<userComment.length;i++) {
-//         userComment[commentSectionNumber].classList.add("hidden");
-//         blackBg.classList.add("hidden");
-//         deleteComment.classList.add("hidden");
-//         body.classList.remove("overflow-none");
-//     }
-// })
 upvotedownvoteButton();
 function upvotedownvoteButton() {
+    const upvoteButton = document.querySelectorAll(".upvote-btn")
+    const downvoteButton = document.querySelectorAll(".downvote-btn")
+    const updownNumber = document.querySelectorAll(".upvote-downvote-number")
+    
     for(let i=0;i<upvoteButton.length;i++) {
         upvoteButton[i].addEventListener('click', () => {
             let result = Number(updownNumber[i].innerHTML);
@@ -335,12 +325,9 @@ for(let i=0;i<replyButton.length;i++) {
         let profileNameValue = profileName[i].innerHTML;
         addReply[i].value = `@${profileNameValue} `;
         addReply[i].focus();
-        console.log(replyButton)
-        console.log(replyTextArea)
     })
 }
-console.log(replyButton)
-console.log(replyTextArea)
+
 let spanLenght;
 let profileNameValue;
 let userCommentValue;
@@ -348,7 +335,7 @@ editFunction();
 function editFunction() {
     for(let i=0;i<editButton.length;i++) {
         editButton[i].addEventListener('click', () => {
-            spanLenght = userReplyAt[i].innerHTML.length;
+            spanLenght = userAtSpan[i].innerHTML.length;
             if(window.innerWidth < 700) {
                 commentGrid[i].style.marginBottom = "2rem";
                 updateButton[i].style.bottom = "3.5rem";
@@ -359,8 +346,27 @@ function editFunction() {
             let editSplit;
             profileNameValue = userAtSpan[i].innerHTML;
             userCommentValue = userContentSpan[i].innerHTML;
-            console.log(profileNameValue)
-            console.log(userCommentValue)
+            editComment[i].value = `${profileNameValue} ${userCommentValue} `;
+            editComment[i].focus();
+        })
+    }
+}
+function userEditFunction() {
+    const userEditButton = document.querySelectorAll(".user-edit-button")
+
+    for(let i=0;i<editButton.length;i++) {
+        userEditButton[i].addEventListener('click', () => {
+            spanLenght = userAtSpan[i].innerHTML.length;
+            if(window.innerWidth < 700) {
+                commentGrid[i].style.marginBottom = "2rem";
+                updateButton[i].style.bottom = "3.5rem";
+            }
+            editedComment[i].classList.add("hidden");
+            editComment[i].classList.remove("hidden");
+            updateButton[i].classList.remove("hidden");
+            let editSplit;
+            profileNameValue = userAtSpan[i].innerHTML;
+            userCommentValue = userContentSpan[i].innerHTML;
             editComment[i].value = `${profileNameValue} ${userCommentValue} `;
             editComment[i].focus();
         })
@@ -370,8 +376,6 @@ for(let i=0;i<updateButton.length;i++) {
     updateButton[i].addEventListener('click', () => {
         profileNameValue = "";
         userCommentValue = "";
-        console.log(profileNameValue)
-        console.log(userCommentValue)
         // editedComment[i].innerHTML = '';
         let commentSplit = editComment[i].value.split(" ");
         for(let j=0;j<commentSplit.length;j++) {
@@ -403,10 +407,12 @@ for(let i=0;i<updateButton.length;i++) {
 //             }
 //     }
 // }
+let ran = 0;
 deleteFunction();
 function deleteFunction() {
     const deleteButton = document.querySelectorAll(".delete-btn")
     const userComment = document.querySelectorAll(".user-comment")
+    console.log(deleteButton)
 
     for(let i=0;i<deleteButton.length;i++) {
         deleteButton[i].addEventListener('click', () => {
@@ -414,6 +420,7 @@ function deleteFunction() {
             deleteComment.classList.remove("hidden");
             body.classList.add("overflow-none");
             commentSectionNumber = i;
+            console.log(commentSectionNumber)
         })
     }
     cancelButton.addEventListener('click', () => {
@@ -426,6 +433,8 @@ function deleteFunction() {
         blackBg.classList.add("hidden");
         deleteComment.classList.add("hidden");
         body.classList.remove("overflow-none");
+        ran = ran + 1;
+        console.log(ran)
     })
 }
 // postNewComment.addEventListener('click', () => {
