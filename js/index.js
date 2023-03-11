@@ -13,8 +13,8 @@ fetch("./data.json")
     userContainer.innerHTML = `
         <section class="post-comment post-new-comment">
             <form action="#" class="myForm">
-                <textarea name="add-comment" id="add-comment" class="add-comment" placeholder="Add a comment..."></textarea>
-                <button type="button" class="send-btn">SEND</button>
+                <textarea name="add-comment" id="add-comment" class="add-comment user-send-comment" placeholder="Add a comment..."></textarea>
+                <button type="button" class="send-btn post-comment-btn">SEND</button>
             </form>
             <img class="profile-picture grid-pp user-profile-picture" src="${data.currentUser.image.png}" alt="Profile Picture">
             <p class="user-username hidden">${data.currentUser.username}</p>
@@ -208,7 +208,9 @@ const replyCommentButton = document.querySelectorAll(".reply-button")
 const addComment = document.querySelectorAll(".add-comment")
 const postComment = document.querySelectorAll(".post-comment")
 const commentReply = document.querySelectorAll(".comment-reply")
+
 const postNewComment = document.querySelector(".post-new-comment")
+const sendButton = document.querySelector(".post-comment-btn")
 
 for(let i=0;i<replyCommentButton.length;i++) {
 
@@ -327,6 +329,20 @@ for(let i=0;i<replyButton.length;i++) {
         addReply[i].focus();
     })
 }
+// const containerMaybe = document.querySelector(".comments-container-maybe")
+
+// const clickHandler = (ev) => {
+//     const replayLol = document.querySelectorAll(".reply-btn")
+//     console.log(replayLol)
+//     for (const btn of replayLol) {
+//         if(btn === ev.target) {
+//             console.log("yay");
+//         }
+//     }
+// }
+
+containerMaybe.addEventListener('click', clickHandler);
+
 
 let spanLenght;
 let profileNameValue;
@@ -437,9 +453,61 @@ function deleteFunction() {
         console.log(ran)
     })
 }
-// postNewComment.addEventListener('click', () => {
+sendButton.addEventListener('click', () => {
+    const userUsername = document.querySelector(".user-username")
+    const userProfilePicture = document.querySelector(".user-profile-picture")
+    const commentContainer = document.querySelector(".comments-container-maybe")
+    const userSendComment = document.querySelector(".user-send-comment")
+    // const replyReply = document.querySelectorAll(".reply-reply-btn")
 
-// })
+    let userUsernameValue = userUsername.innerHTML;
+    let userPictureValue = userProfilePicture.src;
+    let dud = userSendComment.value;
+    let appendReply;
+    appendReply = document.createElement('div');
+    appendReply.innerHTML += `
+    <section class="comment-section reply-comment user-comment user-posted-reply">
+                <div class="comment-box user-comment-box">
+                    <div class="comment user-comment-grid">
+                        <div class="comment-info">
+                            <img class="profile-picture" src="${userPictureValue}" alt="Profile Picture">
+                            <p class="profile-name">${userUsernameValue}</p>
+                            <p class="you">You</p>
+                            <p class="time-posted">now</p>
+                        </div>
+                        <div class="comment-content user-comment-content">
+                            <p class="edited-comment user-edited-comment">
+                            <span class="at-span user-reply-at user-at-span"></span> <span class="user-comment-content-p user-content-span">${dud}</span>
+                            </p>
+                            <textarea name="edit-comment" id="edit-comment" class="add-comment edit-comment hidden">
+
+                            </textarea>
+                        </div>
+                        <button class="send-btn update-btn hidden">UPDATE</button>
+                    </div>
+                    <div class="upvote-downvote">
+                        <button class="upvote-btn">
+                            <svg width="11" height="11" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6.33 10.896c.137 0 .255-.05.354-.149.1-.1.149-.217.149-.354V7.004h3.315c.136 0 .254-.05.354-.149.099-.1.148-.217.148-.354V5.272a.483.483 0 0 0-.148-.354.483.483 0 0 0-.354-.149H6.833V1.4a.483.483 0 0 0-.149-.354.483.483 0 0 0-.354-.149H4.915a.483.483 0 0 0-.354.149c-.1.1-.149.217-.149.354v3.37H1.08a.483.483 0 0 0-.354.15c-.1.099-.149.217-.149.353v1.23c0 .136.05.254.149.353.1.1.217.149.354.149h3.333v3.39c0 .136.05.254.15.353.098.1.216.149.353.149H6.33Z" fill="#C5C6EF"/>
+                            </svg>
+                        </button>
+                        <p class="upvote-downvote-number">0</p>
+                        <button class="downvote-btn">
+                            <svg width="11" height="3" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9.256 2.66c.204 0 .38-.056.53-.167.148-.11.222-.243.222-.396V.722c0-.152-.074-.284-.223-.395a.859.859 0 0 0-.53-.167H.76a.859.859 0 0 0-.53.167C.083.437.009.57.009.722v1.375c0 .153.074.285.223.396a.859.859 0 0 0 .53.167h8.495Z" fill="#C5C6EF"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="delete-edit">
+                        <button class="delete-btn delete-btn-user"><img src="images/icon-delete.svg" alt="Delete Icon"><span class="delete-span">Delete</span></button>
+                        <button class="edit-btn user-edit-button"><img src="images/icon-edit.svg" alt="Edit Icon"><span class="edit-span">Edit</span></button>
+                    </div>
+                </div>
+            </section>
+    `;
+    commentContainer.appendChild(appendReply);
+    userSendComment.value = "";
+})
 for(let i=0;i<replyButton.length;i++) {
     cancelCommentButton[i].addEventListener('click', () => {
         replyTextArea[i].classList.add("hidden");
