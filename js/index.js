@@ -341,7 +341,7 @@ for(let i=0;i<replyButton.length;i++) {
 //     }
 // }
 
-containerMaybe.addEventListener('click', clickHandler);
+// containerMaybe.addEventListener('click', clickHandler);
 
 
 let spanLenght;
