@@ -213,7 +213,23 @@ textarea {
     height: 100%;
     z-index: 2;
 }
+.black-bg-new {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #333;
+    opacity: 0.6;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
 .delete-comment-container {
+    position: fixed;
+    width: 100%;
+    height: 100dvh;
+    z-index: 3;
+}
+.delete-comment-container-new {
     position: fixed;
     width: 100%;
     height: 100dvh;
@@ -233,7 +249,26 @@ textarea {
     background-color: var(--white-100);
     max-width: 363px;
 }
+.delete-comment-new {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    width: 90%;
+    border-radius: 10px;
+    padding: 1.7rem;
+    display: grid;
+    gap: 1.2rem;
+    background-color: var(--white-100);
+    max-width: 363px;
+}
 .delete-comment h2 {
+    color: var(--blue-800);
+    font-weight: 500;
+    font-size: 1.3rem;
+}
+.delete-comment-new h2 {
     color: var(--blue-800);
     font-weight: 500;
     font-size: 1.3rem;
@@ -242,7 +277,15 @@ textarea {
     line-height: 1.4;
     color: var(--grayish-blue-300);
 }
+.delete-comment-new p {
+    line-height: 1.4;
+    color: var(--grayish-blue-300);
+}
 .delete-comment-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+.delete-comment-buttons-new {
     display: flex;
     justify-content: space-between;
 }
@@ -254,10 +297,24 @@ textarea {
     font-size: 1rem;
     font-weight: 400;
 }
+.delete-new, .cancel-new {
+    color: var(--white-100);
+    /* padding: 0.9rem 1.250rem; */
+    padding: 0.9rem clamp(1.250rem, 3vw, 1.7rem);
+    border-radius: 7px;
+    font-size: 1rem;
+    font-weight: 400;
+}
 .cancel {
     background-color: var(--grayish-blue-300);
 }
+.cancel-new {
+    background-color: var(--grayish-blue-300);
+}
 .delete {
+    background-color: var(--red-400);
+}
+.delete-new {
     background-color: var(--red-400);
 }
 .edit-comment {

@@ -1,16 +1,14 @@
 const mainMain = document.querySelector(".main")
 const main = document.querySelector(".comments-container")
 const userContainer = document.querySelector(".user-container")
+const commentsContainer = document.querySelector(".comments-container-maybe")
 
 fetch("./data.json")
     .then(function (response) {
         return response.json();
     })
     .then(function (data) {
-    let commentsContainer;
-    commentsContainer = document.createElement('div');
-    commentsContainer.classList.add('comments-container-maybe');
-    userContainer.innerHTML = `
+    let stringlul = `
         <section class="post-comment post-new-comment">
             <form action="#" class="myForm">
                 <textarea name="add-comment" id="add-comment" class="add-comment user-send-comment" placeholder="Add a comment..."></textarea>
@@ -20,6 +18,7 @@ fetch("./data.json")
             <p class="user-username hidden">${data.currentUser.username}</p>
         </section>
     `;
+    userContainer.insertAdjacentHTML("beforeEnd", stringlul);
     let out = "";
     let repliesOut = "";
     for (let comment of data.comments) {
@@ -47,13 +46,13 @@ fetch("./data.json")
                         </div>
                         <div class="upvote-downvote">
                             <button class="upvote-btn">
-                                <svg width="11" height="11" xmlns="http://www.w3.org/2000/svg">
+                                <svg class="upvote-svg" width="11" height="11" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M6.33 10.896c.137 0 .255-.05.354-.149.1-.1.149-.217.149-.354V7.004h3.315c.136 0 .254-.05.354-.149.099-.1.148-.217.148-.354V5.272a.483.483 0 0 0-.148-.354.483.483 0 0 0-.354-.149H6.833V1.4a.483.483 0 0 0-.149-.354.483.483 0 0 0-.354-.149H4.915a.483.483 0 0 0-.354.149c-.1.1-.149.217-.149.354v3.37H1.08a.483.483 0 0 0-.354.15c-.1.099-.149.217-.149.353v1.23c0 .136.05.254.149.353.1.1.217.149.354.149h3.333v3.39c0 .136.05.254.15.353.098.1.216.149.353.149H6.33Z" fill="#C5C6EF"/>
                                 </svg>
                             </button>
                             <p class="upvote-downvote-number">${reply.score}</p>
                             <button class="downvote-btn">
-                                <svg width="11" height="3" xmlns="http://www.w3.org/2000/svg">
+                                <svg class="downvote-svg" width="11" height="3" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M9.256 2.66c.204 0 .38-.056.53-.167.148-.11.222-.243.222-.396V.722c0-.152-.074-.284-.223-.395a.859.859 0 0 0-.53-.167H.76a.859.859 0 0 0-.53.167C.083.437.009.57.009.722v1.375c0 .153.074.285.223.396a.859.859 0 0 0 .53.167h8.495Z" fill="#C5C6EF"/>
                                 </svg>
                             </button>
@@ -81,13 +80,13 @@ fetch("./data.json")
                     </div>
                     <div class="upvote-downvote">
                         <button class="upvote-btn">
-                            <svg width="11" height="11" xmlns="http://www.w3.org/2000/svg">
+                            <svg class="upvote-svg" width="11" height="11" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M6.33 10.896c.137 0 .255-.05.354-.149.1-.1.149-.217.149-.354V7.004h3.315c.136 0 .254-.05.354-.149.099-.1.148-.217.148-.354V5.272a.483.483 0 0 0-.148-.354.483.483 0 0 0-.354-.149H6.833V1.4a.483.483 0 0 0-.149-.354.483.483 0 0 0-.354-.149H4.915a.483.483 0 0 0-.354.149c-.1.1-.149.217-.149.354v3.37H1.08a.483.483 0 0 0-.354.15c-.1.099-.149.217-.149.353v1.23c0 .136.05.254.149.353.1.1.217.149.354.149h3.333v3.39c0 .136.05.254.15.353.098.1.216.149.353.149H6.33Z" fill="#C5C6EF"/>
                             </svg>
                         </button>
                         <p class="upvote-downvote-number">${reply.score}</p>
                         <button class="downvote-btn">
-                            <svg width="11" height="3" xmlns="http://www.w3.org/2000/svg">
+                            <svg class="downvote-svg" width="11" height="3" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M9.256 2.66c.204 0 .38-.056.53-.167.148-.11.222-.243.222-.396V.722c0-.152-.074-.284-.223-.395a.859.859 0 0 0-.53-.167H.76a.859.859 0 0 0-.53.167C.083.437.009.57.009.722v1.375c0 .153.074.285.223.396a.859.859 0 0 0 .53.167h8.495Z" fill="#C5C6EF"/>
                             </svg>
                         </button>
@@ -116,7 +115,8 @@ fetch("./data.json")
             `;
             }
         }
-        commentsContainer.innerHTML += `
+        let stringlullul = '';
+        stringlullul += `
         <section class="comment-section main-comment ${comment.id}">
             <div class="comment-box">
                 <div class="comment">
@@ -131,13 +131,13 @@ fetch("./data.json")
                 </div>
                 <div class="upvote-downvote">
                     <button class="upvote-btn">
-                        <svg width="11" height="11" xmlns="http://www.w3.org/2000/svg">
+                        <svg class="upvote-svg" width="11" height="11" xmlns="http://www.w3.org/2000/svg">
                             <path d="M6.33 10.896c.137 0 .255-.05.354-.149.1-.1.149-.217.149-.354V7.004h3.315c.136 0 .254-.05.354-.149.099-.1.148-.217.148-.354V5.272a.483.483 0 0 0-.148-.354.483.483 0 0 0-.354-.149H6.833V1.4a.483.483 0 0 0-.149-.354.483.483 0 0 0-.354-.149H4.915a.483.483 0 0 0-.354.149c-.1.1-.149.217-.149.354v3.37H1.08a.483.483 0 0 0-.354.15c-.1.099-.149.217-.149.353v1.23c0 .136.05.254.149.353.1.1.217.149.354.149h3.333v3.39c0 .136.05.254.15.353.098.1.216.149.353.149H6.33Z" fill="#C5C6EF"/>
                         </svg>
                     </button>
                     <p class="upvote-downvote-number">${comment.score}</p>
                     <button class="downvote-btn">
-                        <svg width="11" height="3" xmlns="http://www.w3.org/2000/svg">
+                        <svg class="downvote-svg" width="11" height="3" xmlns="http://www.w3.org/2000/svg">
                             <path d="M9.256 2.66c.204 0 .38-.056.53-.167.148-.11.222-.243.222-.396V.722c0-.152-.074-.284-.223-.395a.859.859 0 0 0-.53-.167H.76a.859.859 0 0 0-.53.167C.083.437.009.57.009.722v1.375c0 .153.074.285.223.396a.859.859 0 0 0 .53.167h8.495Z" fill="#C5C6EF"/>
                         </svg>
                     </button>
@@ -164,10 +164,9 @@ fetch("./data.json")
             </div>
         </section>
         `;
+        commentsContainer.insertAdjacentHTML("beforeEnd", stringlullul);
         repliesOut = "";
     }
-    mainMain.prepend(commentsContainer);
-    // main.innerHTML = out;
 }).then(function () {
     mainScript();
 })
@@ -212,9 +211,23 @@ const commentReply = document.querySelectorAll(".comment-reply")
 const postNewComment = document.querySelector(".post-new-comment")
 const sendButton = document.querySelector(".post-comment-btn")
 
+let clicked = -1;
+
+document.addEventListener('click', function (event) {
+	if (event.target.matches('.send-btn')) {
+		console.log('A button as clicked.');
+	}
+});
+document.addEventListener('click', function (event) {
+	if (event.target.matches('.delete-btn')) {
+		console.log('A button as clicked.');
+	}
+});
+
 for(let i=0;i<replyCommentButton.length;i++) {
 
     replyCommentButton[i].addEventListener('click', () => {
+        clicked = clicked + 1;
         const userUsername = document.querySelector(".user-username")
         const userProfilePicture = document.querySelector(".user-profile-picture")
         // const replyReply = document.querySelectorAll(".reply-reply-btn")
@@ -222,14 +235,21 @@ for(let i=0;i<replyCommentButton.length;i++) {
         let userUsernameValue = userUsername.innerHTML;
         let userPictureValue = userProfilePicture.src;
         let dud = addReply[i].value;
+        let commentSplitNew = dud.split(" ");
+        for(let j=0;j<commentSplitNew.length;j++) {
+            if((commentSplitNew[j].startsWith("@")) && (commentSplitNew[j].length > 1)) {
+                commentSplitNew[j] = `<span class="at-span user-reply-at user-at-span user-at-span-new">${commentSplitNew[j]}</span>`;
+            }
+        }
+        let dudFinal = commentSplitNew.join(" ");
         let appendReply;
         appendReply = document.createElement('div');
         replyTextArea[i].classList.add("hidden");
         commentReply[i].classList.remove("hidden");
         appendReply.innerHTML += `
-        <section class="comment-section reply-comment user-comment user-posted-reply">
+        <section class="comment-section reply-comment user-comment user-comment-new user-posted-reply">
                     <div class="comment-box user-comment-box">
-                        <div class="comment user-comment-grid">
+                        <div class="comment user-comment-grid user-comment-grid-new">
                             <div class="comment-info">
                                 <img class="profile-picture" src="${userPictureValue}" alt="Profile Picture">
                                 <p class="profile-name">${userUsernameValue}</p>
@@ -237,36 +257,41 @@ for(let i=0;i<replyCommentButton.length;i++) {
                                 <p class="time-posted">now</p>
                             </div>
                             <div class="comment-content user-comment-content">
-                                <p class="edited-comment user-edited-comment">
-                                <span class="at-span user-reply-at user-at-span"></span> <span class="user-comment-content-p user-content-span">${dud}</span>
+                                <p class="edited-comment user-edited-comment edited-comment-new">
+                                ${dudFinal}
                                 </p>
-                                <textarea name="edit-comment" id="edit-comment" class="add-comment edit-comment hidden">
+                                <textarea name="edit-comment" id="edit-comment" class="add-comment edit-comment edit-comment-new hidden">
 
                                 </textarea>
                             </div>
-                            <button class="send-btn update-btn hidden">UPDATE</button>
+                            <button class="send-btn update-btn update-btn-new hidden">UPDATE</button>
                         </div>
                         <div class="upvote-downvote">
-                            <button class="upvote-btn">
-                                <svg width="11" height="11" xmlns="http://www.w3.org/2000/svg">
+                            <button class="upvote-btn new-upvote-button ${clicked}">
+                                <svg class="upvote-svg" width="11" height="11" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M6.33 10.896c.137 0 .255-.05.354-.149.1-.1.149-.217.149-.354V7.004h3.315c.136 0 .254-.05.354-.149.099-.1.148-.217.148-.354V5.272a.483.483 0 0 0-.148-.354.483.483 0 0 0-.354-.149H6.833V1.4a.483.483 0 0 0-.149-.354.483.483 0 0 0-.354-.149H4.915a.483.483 0 0 0-.354.149c-.1.1-.149.217-.149.354v3.37H1.08a.483.483 0 0 0-.354.15c-.1.099-.149.217-.149.353v1.23c0 .136.05.254.149.353.1.1.217.149.354.149h3.333v3.39c0 .136.05.254.15.353.098.1.216.149.353.149H6.33Z" fill="#C5C6EF"/>
                                 </svg>
                             </button>
-                            <p class="upvote-downvote-number">0</p>
-                            <button class="downvote-btn">
-                                <svg width="11" height="3" xmlns="http://www.w3.org/2000/svg">
+                            <p class="upvote-downvote-number new-updown-number ${clicked}">0</p>
+                            <button class="downvote-btn new-downvote-button ${clicked}">
+                                <svg class="downvote-svg" width="11" height="3" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M9.256 2.66c.204 0 .38-.056.53-.167.148-.11.222-.243.222-.396V.722c0-.152-.074-.284-.223-.395a.859.859 0 0 0-.53-.167H.76a.859.859 0 0 0-.53.167C.083.437.009.57.009.722v1.375c0 .153.074.285.223.396a.859.859 0 0 0 .53.167h8.495Z" fill="#C5C6EF"/>
                                 </svg>
                             </button>
                         </div>
                         <div class="delete-edit">
-                            <button class="delete-btn delete-btn-user"><img src="images/icon-delete.svg" alt="Delete Icon"><span class="delete-span">Delete</span></button>
-                            <button class="edit-btn user-edit-button"><img src="images/icon-edit.svg" alt="Edit Icon"><span class="edit-span">Edit</span></button>
+                            <button class="delete-btn delete-btn-user delete-btn-new"><img src="images/icon-delete.svg" alt="Delete Icon"><span class="delete-span">Delete</span></button>
+                            <button class="edit-btn user-edit-button edit-btn-new"><img src="images/icon-edit.svg" alt="Edit Icon"><span class="edit-span">Edit</span></button>
                         </div>
                     </div>
                 </section>
         `;
-        commentReply[i].appendChild(appendReply);
+        if(commentReply[i].parentNode.classList.contains('reply-comment')) {
+            commentReply[i].parentNode.parentNode.appendChild(appendReply);
+        } else {
+            commentReply[i].appendChild(appendReply);
+            console.log(commentReply[i].parentNode.parentNode);
+        }
     })
 }
 
@@ -274,183 +299,152 @@ let commentSectionNumber = 0;
 
 upvotedownvoteButton();
 function upvotedownvoteButton() {
-    const upvoteButton = document.querySelectorAll(".upvote-btn")
-    const downvoteButton = document.querySelectorAll(".downvote-btn")
-    const updownNumber = document.querySelectorAll(".upvote-downvote-number")
-    
-    for(let i=0;i<upvoteButton.length;i++) {
-        upvoteButton[i].addEventListener('click', () => {
-            let result = Number(updownNumber[i].innerHTML);
-            if(downvoteButton[i].classList.contains("down-active")) {
-                downvoteButton[i].classList.remove("down-active");
+
+    document.addEventListener('click', function (event) {
+        if (event.target.matches('.upvote-svg')) {
+            let upvoteParent = event.target.parentNode.parentNode;
+            console.log(upvoteParent)
+            const upDownNumberLul = upvoteParent.querySelector(".upvote-downvote-number")
+            const downvoteButtonLul = upvoteParent.querySelector(".downvote-btn")
+            const upvoteButtonLul = upvoteParent.querySelector(".upvote-btn")
+            console.log(upDownNumberLul)
+            console.log(downvoteButtonLul)
+            console.log(upvoteButtonLul)
+            let result = Number(upDownNumberLul.innerHTML);
+            if(downvoteButtonLul.classList.contains("down-active")) {
+                downvoteButtonLul.classList.remove("down-active");
                 result = result + 2;
-                updownNumber[i].innerHTML = result.toString();
-                upvoteButton[i].classList.add("up-active")
+                upDownNumberLul.innerHTML = result.toString();
+                upvoteButtonLul.classList.add("up-active")
             } else {
-                if(upvoteButton[i].classList.contains("up-active")) {
+                if(upvoteButtonLul.classList.contains("up-active")) {
                     result = result - 1;
-                    updownNumber[i].innerHTML = result.toString();
-                    upvoteButton[i].classList.remove("up-active");
+                    upDownNumberLul.innerHTML = result.toString();
+                    upvoteButtonLul.classList.remove("up-active");
                 } else {
                     result = result + 1;
-                    updownNumber[i].innerHTML = result.toString();
-                    upvoteButton[i].classList.add("up-active");
+                    upDownNumberLul.innerHTML = result.toString();
+                    upvoteButtonLul.classList.add("up-active");
                 }
             }
-        })
-    }
-    for(let i=0;i<downvoteButton.length;i++) {
-        downvoteButton[i].addEventListener('click', () => {
-            let result = Number(updownNumber[i].innerHTML);
-            if(upvoteButton[i].classList.contains("up-active")) {
-                upvoteButton[i].classList.remove("up-active");
+        }
+    });
+    document.addEventListener('click', function (event) {
+        if (event.target.matches('.upvote-downvote')) {
+            let downvoteParent = event.target.parentNode.parentNode;
+            const upDownNumberLul = downvoteParent.querySelector(".upvote-downvote-number")
+            const downvoteButtonLul = downvoteParent.querySelector(".downvote-btn")
+            const upvoteButtonLul = downvoteParent.querySelector(".upvote-btn")
+            let result = Number(upDownNumberLul.innerHTML);
+            if(upvoteButtonLul.classList.contains("up-active")) {
+                upvoteButtonLul.classList.remove("up-active");
                 result = result - 2;
-                updownNumber[i].innerHTML = result.toString();
-                downvoteButton[i].classList.add("down-active")
+                upDownNumberLul.innerHTML = result.toString();
+                downvoteButtonLul.classList.add("down-active")
             } else {
-                if(downvoteButton[i].classList.contains("down-active")) { 
+                if(downvoteButtonLul.classList.contains("down-active")) { 
                     result = result + 1;
-                    updownNumber[i].innerHTML = result.toString();
-                    downvoteButton[i].classList.remove("down-active");
+                    upDownNumberLul.innerHTML = result.toString();
+                    downvoteButtonLul.classList.remove("down-active");
                 } else {
                     result = result - 1;
-                    updownNumber[i].innerHTML = result.toString();
-                    downvoteButton[i].classList.add("down-active");
+                    upDownNumberLul.innerHTML = result.toString();
+                    downvoteButtonLul.classList.add("down-active");
                 }
             }
-        })
-    }
+        }
+    });
 }
-for(let i=0;i<replyButton.length;i++) {
-    replyButton[i].addEventListener('click', () => {
-        replyTextArea[i].classList.remove("hidden");
-        let profileNameValue = profileName[i].innerHTML;
-        addReply[i].value = `@${profileNameValue} `;
-        addReply[i].focus();
-    })
-}
-// const containerMaybe = document.querySelector(".comments-container-maybe")
 
-// const clickHandler = (ev) => {
-//     const replayLol = document.querySelectorAll(".reply-btn")
-//     console.log(replayLol)
-//     for (const btn of replayLol) {
-//         if(btn === ev.target) {
-//             console.log("yay");
-//         }
-//     }
-// }
+document.addEventListener('click', function (event) {
+	if (event.target.matches('.reply-p')) {
+        let replyParent = event.target.parentNode.parentNode.parentNode;
+        const replyTextAreaLul = replyParent.querySelector(".comment-reply-reply")
+        const profileNameLul = replyParent.querySelector(".profile-name")
+        const addReplyLul = replyParent.querySelector(".add-reply")
+		replyTextAreaLul.classList.remove("hidden");
+        let profileNameValue = profileNameLul.innerHTML;
+        addReplyLul.value = `@${profileNameValue} `;
+        addReplyLul.focus();
+	}
+});
 
-// containerMaybe.addEventListener('click', clickHandler);
-
-
-let spanLenght;
 let profileNameValue;
 let userCommentValue;
 editFunction();
-function editFunction() {
-    for(let i=0;i<editButton.length;i++) {
-        editButton[i].addEventListener('click', () => {
-            spanLenght = userAtSpan[i].innerHTML.length;
-            if(window.innerWidth < 700) {
-                commentGrid[i].style.marginBottom = "2rem";
-                updateButton[i].style.bottom = "3.5rem";
-            }
-            editedComment[i].classList.add("hidden");
-            editComment[i].classList.remove("hidden");
-            updateButton[i].classList.remove("hidden");
-            let editSplit;
-            profileNameValue = userAtSpan[i].innerHTML;
-            userCommentValue = userContentSpan[i].innerHTML;
-            editComment[i].value = `${profileNameValue} ${userCommentValue} `;
-            editComment[i].focus();
-        })
-    }
-}
-function userEditFunction() {
-    const userEditButton = document.querySelectorAll(".user-edit-button")
+function editFunction() {                                                                    // IZMENI
 
-    for(let i=0;i<editButton.length;i++) {
-        userEditButton[i].addEventListener('click', () => {
-            spanLenght = userAtSpan[i].innerHTML.length;
+    document.addEventListener('click', function (event) {
+        if (event.target.matches('.edit-span')) {
+            let editParent = event.target.parentNode.parentNode.parentNode;
+            const userAtSpanLul = editParent.querySelector(".user-at-span")
+            const commentGridLul = editParent.querySelector(".user-comment-grid")
+            const updateButtonLul = editParent.querySelector(".update-btn")
+            const editedCommentLul = editParent.querySelector(".edited-comment")
+            const editCommentLul = editParent.querySelector(".edit-comment")
+            const userContentSpanLul = editParent.querySelector(".user-content-span")
             if(window.innerWidth < 700) {
-                commentGrid[i].style.marginBottom = "2rem";
-                updateButton[i].style.bottom = "3.5rem";
+                commentGridLul.style.marginBottom = "2rem";
+                updateButtonLul.style.bottom = "3.5rem";
             }
-            editedComment[i].classList.add("hidden");
-            editComment[i].classList.remove("hidden");
-            updateButton[i].classList.remove("hidden");
-            let editSplit;
-            profileNameValue = userAtSpan[i].innerHTML;
-            userCommentValue = userContentSpan[i].innerHTML;
-            editComment[i].value = `${profileNameValue} ${userCommentValue} `;
-            editComment[i].focus();
-        })
-    }
+            editedCommentLul.classList.add("hidden");
+            editCommentLul.classList.remove("hidden");
+            updateButtonLul.classList.remove("hidden");
+            // console.log(editedCommentLul.);
+            // profileNameValue = userAtSpanLul.innerHTML;
+            // userCommentValue = userContentSpanLul.innerHTML;
+            // editCommentLul.value = `${profileNameValue} ${userCommentValue} `;
+            editCommentLul.value = editedCommentLul.textContent.trim();
+            editCommentLul.focus();
+        }
+    });
 }
-for(let i=0;i<updateButton.length;i++) {
-    updateButton[i].addEventListener('click', () => {
-        profileNameValue = "";
+
+document.addEventListener('click', function (event) {                                                              // IZMENI
+	if (event.target.matches('.update-btn')) {
+        let updateParent = event.target.parentNode.parentNode;
+        const editedCommentLul = updateParent.querySelector(".edited-comment")
+        const editCommentLul = updateParent.querySelector(".edit-comment")
+        const userAtSpanLul = updateParent.querySelector(".user-at-span")
+        const updateButtonLul = updateParent.querySelector(".update-btn")
+		profileNameValue = "";
         userCommentValue = "";
-        // editedComment[i].innerHTML = '';
-        let commentSplit = editComment[i].value.split(" ");
+        console.log(editCommentLul.value)
+        let commentSplit = editCommentLul.value.split(" ");
         for(let j=0;j<commentSplit.length;j++) {
             if((commentSplit[j].startsWith("@")) && (commentSplit[j].length > 1)) {
                 commentSplit[j] = `<span class="at-span user-reply-at user-at-span">${commentSplit[j]}</span>`;
             }
         }
-        let stringSlice = editComment[i].value.slice(0, spanLenght);
-        if(stringSlice.includes("@")) {
-            userAtSpan[i].innerHTML = `${stringSlice}`;
-            let editCommentSplit = editComment[i].value.replace(stringSlice,"");
-            userContentSpan[i].innerHTML = editCommentSplit;
-        } else {
-            userAtSpan[i].innerHTML = "";
-            let editCommentSplit = editComment[i].value;
-            userContentSpan[i].innerHTML = editCommentSplit;
-        }
-        editedComment[i].innerHTML = commentSplit.join(" ");
-        editedComment[i].classList.remove("hidden");
-        updateButton[i].classList.add("hidden");
-        editComment[i].classList.add("hidden");
-    })
-}
-// function randomFunction() {
-//     const replyComment = document.querySelectorAll(".user-posted-reply")
-//         if(replyCommentButton[randomCounter].classList.contains("reply-reply-btn")) {
-//             for(let k=0;k<replyComment.length;k++) {
-//                 replyComment[k].classList.remove("reply-comment");
-//             }
-//     }
-// }
+        editedCommentLul.innerHTML = commentSplit.join(" ");
+        editedCommentLul.classList.remove("hidden");
+        updateButtonLul.classList.add("hidden");
+        editCommentLul.classList.add("hidden");
+	}
+});
+
 let ran = 0;
 deleteFunction();
 function deleteFunction() {
-    const deleteButton = document.querySelectorAll(".delete-btn")
-    const userComment = document.querySelectorAll(".user-comment")
-    console.log(deleteButton)
-
-    for(let i=0;i<deleteButton.length;i++) {
-        deleteButton[i].addEventListener('click', () => {
+    document.addEventListener('click', function (event) {
+        if (event.target.matches('.delete-span')) {
             blackBg.classList.remove("hidden");
             deleteComment.classList.remove("hidden");
             body.classList.add("overflow-none");
-            commentSectionNumber = i;
+            commentSectionNumber = event.target.parentNode.parentNode.parentNode;
             console.log(commentSectionNumber)
-        })
-    }
+        }
+    });
     cancelButton.addEventListener('click', () => {
         blackBg.classList.add("hidden");
         deleteComment.classList.add("hidden");
         body.classList.remove("overflow-none");
     })
     deleteConfirmButton.addEventListener('click', () => {
-        userComment[commentSectionNumber].classList.add("hidden");
+        commentSectionNumber.classList.add("hidden");
         blackBg.classList.add("hidden");
         deleteComment.classList.add("hidden");
         body.classList.remove("overflow-none");
-        ran = ran + 1;
-        console.log(ran)
     })
 }
 sendButton.addEventListener('click', () => {
@@ -463,47 +457,54 @@ sendButton.addEventListener('click', () => {
     let userUsernameValue = userUsername.innerHTML;
     let userPictureValue = userProfilePicture.src;
     let dud = userSendComment.value;
+    // let commentSplitNew = dud.split(" ");
+    // for(let j=0;j<commentSplitNew.length;j++) {
+    //     if((commentSplitNew[j].startsWith("@")) && (commentSplitNew[j].length > 1)) {
+    //         commentSplitNew[j] = `<span class="at-span user-reply-at user-at-span user-at-span-new">${commentSplitNew[j]}</span>`;
+    //     }
+    // }
+    // let dudFinal = commentSplitNew.join(" ");
     let appendReply;
     appendReply = document.createElement('div');
     appendReply.innerHTML += `
-    <section class="comment-section reply-comment user-comment user-posted-reply">
-                <div class="comment-box user-comment-box">
-                    <div class="comment user-comment-grid">
-                        <div class="comment-info">
-                            <img class="profile-picture" src="${userPictureValue}" alt="Profile Picture">
-                            <p class="profile-name">${userUsernameValue}</p>
-                            <p class="you">You</p>
-                            <p class="time-posted">now</p>
-                        </div>
-                        <div class="comment-content user-comment-content">
-                            <p class="edited-comment user-edited-comment">
-                            <span class="at-span user-reply-at user-at-span"></span> <span class="user-comment-content-p user-content-span">${dud}</span>
-                            </p>
-                            <textarea name="edit-comment" id="edit-comment" class="add-comment edit-comment hidden">
-
-                            </textarea>
-                        </div>
-                        <button class="send-btn update-btn hidden">UPDATE</button>
-                    </div>
-                    <div class="upvote-downvote">
-                        <button class="upvote-btn">
-                            <svg width="11" height="11" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M6.33 10.896c.137 0 .255-.05.354-.149.1-.1.149-.217.149-.354V7.004h3.315c.136 0 .254-.05.354-.149.099-.1.148-.217.148-.354V5.272a.483.483 0 0 0-.148-.354.483.483 0 0 0-.354-.149H6.833V1.4a.483.483 0 0 0-.149-.354.483.483 0 0 0-.354-.149H4.915a.483.483 0 0 0-.354.149c-.1.1-.149.217-.149.354v3.37H1.08a.483.483 0 0 0-.354.15c-.1.099-.149.217-.149.353v1.23c0 .136.05.254.149.353.1.1.217.149.354.149h3.333v3.39c0 .136.05.254.15.353.098.1.216.149.353.149H6.33Z" fill="#C5C6EF"/>
-                            </svg>
-                        </button>
-                        <p class="upvote-downvote-number">0</p>
-                        <button class="downvote-btn">
-                            <svg width="11" height="3" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M9.256 2.66c.204 0 .38-.056.53-.167.148-.11.222-.243.222-.396V.722c0-.152-.074-.284-.223-.395a.859.859 0 0 0-.53-.167H.76a.859.859 0 0 0-.53.167C.083.437.009.57.009.722v1.375c0 .153.074.285.223.396a.859.859 0 0 0 .53.167h8.495Z" fill="#C5C6EF"/>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="delete-edit">
-                        <button class="delete-btn delete-btn-user"><img src="images/icon-delete.svg" alt="Delete Icon"><span class="delete-span">Delete</span></button>
-                        <button class="edit-btn user-edit-button"><img src="images/icon-edit.svg" alt="Edit Icon"><span class="edit-span">Edit</span></button>
-                    </div>
+    <section class="comment-section user-comment user-comment-new user-posted-reply">
+        <div class="comment-box user-comment-box">
+            <div class="comment user-comment-grid user-comment-grid-new">
+                <div class="comment-info">
+                    <img class="profile-picture" src="${userPictureValue}" alt="Profile Picture">
+                    <p class="profile-name">${userUsernameValue}</p>
+                    <p class="you">You</p>
+                    <p class="time-posted">now</p>
                 </div>
-            </section>
+                <div class="comment-content user-comment-content">
+                    <p class="edited-comment user-edited-comment edited-comment-new">
+                    <span class="at-span user-reply-at user-at-span user-at-span-new"></span> <span class="user-comment-content-p user-content-span user-content-span-new">${dud}</span>
+                    </p>
+                    <textarea name="edit-comment" id="edit-comment" class="add-comment edit-comment edit-comment-new hidden">
+
+                    </textarea>
+                </div>
+                <button class="send-btn update-btn update-btn-new hidden">UPDATE</button>
+            </div>
+            <div class="upvote-downvote">
+                <button class="upvote-btn new-upvote-button">
+                    <svg class="upvote-svg" width="11" height="11" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6.33 10.896c.137 0 .255-.05.354-.149.1-.1.149-.217.149-.354V7.004h3.315c.136 0 .254-.05.354-.149.099-.1.148-.217.148-.354V5.272a.483.483 0 0 0-.148-.354.483.483 0 0 0-.354-.149H6.833V1.4a.483.483 0 0 0-.149-.354.483.483 0 0 0-.354-.149H4.915a.483.483 0 0 0-.354.149c-.1.1-.149.217-.149.354v3.37H1.08a.483.483 0 0 0-.354.15c-.1.099-.149.217-.149.353v1.23c0 .136.05.254.149.353.1.1.217.149.354.149h3.333v3.39c0 .136.05.254.15.353.098.1.216.149.353.149H6.33Z" fill="#C5C6EF"/>
+                    </svg>
+                </button>
+                <p class="upvote-downvote-number new-updown-number">0</p>
+                <button class="downvote-btn new-downvote-button">
+                    <svg class="downvote-svg" width="11" height="3" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9.256 2.66c.204 0 .38-.056.53-.167.148-.11.222-.243.222-.396V.722c0-.152-.074-.284-.223-.395a.859.859 0 0 0-.53-.167H.76a.859.859 0 0 0-.53.167C.083.437.009.57.009.722v1.375c0 .153.074.285.223.396a.859.859 0 0 0 .53.167h8.495Z" fill="#C5C6EF"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="delete-edit">
+                <button class="delete-btn delete-btn-user delete-btn-new"><img src="images/icon-delete.svg" alt="Delete Icon"><span class="delete-span">Delete</span></button>
+                <button class="edit-btn user-edit-button edit-btn-new"><img src="images/icon-edit.svg" alt="Edit Icon"><span class="edit-span">Edit</span></button>
+            </div>
+        </div>
+    </section>
     `;
     commentContainer.appendChild(appendReply);
     userSendComment.value = "";
