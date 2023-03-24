@@ -214,8 +214,8 @@ const sendButton = document.querySelector(".post-comment-btn")
 let clicked = -1;
 
 document.addEventListener('click', function (event) {
-	if (event.target.matches('.send-btn')) {
-		console.log('A button as clicked.');
+	if (event.target.matches('.reply-btn')) {
+		console.log('Not working');
 	}
 });
 document.addEventListener('click', function (event) {
