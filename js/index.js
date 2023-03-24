@@ -215,7 +215,7 @@ let clicked = -1;
 
 document.addEventListener('click', function (event) {
 	if (event.target.matches('.reply-btn')) {
-		console.log('Not working');
+		console.log('Not working :(');
 	}
 });
 document.addEventListener('click', function (event) {
