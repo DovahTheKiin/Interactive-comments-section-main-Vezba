@@ -25,8 +25,8 @@ fetch("./data.json")
         for (let reply of comment.replies) {
             if(data.currentUser.username === reply.user.username) {
                 repliesOut += `
-                <section class="comment-section reply-comment user-comment ${reply.id}">
-                    <div class="comment-box user-comment-box">
+                <section class="comment-section reply-comment user-comment">
+                    <div class="comment-box user-comment-box" data-id="${reply.id}">
                         <div class="comment user-comment-grid">
                             <div class="comment-info">
                                 <img class="profile-picture" src="${reply.user.image.png}" alt="Profile Picture">
@@ -66,8 +66,8 @@ fetch("./data.json")
                 `;
             } else {
             repliesOut += `
-            <section class="comment-section reply-comment ${reply.id}">
-                <div class="comment-box">
+            <section class="comment-section reply-comment">
+                <div class="comment-box" data-id="${reply.id}">
                     <div class="comment">
                         <div class="comment-info">
                             <img class="profile-picture" src="${reply.user.image.png}" alt="Profile Picture">
@@ -117,8 +117,8 @@ fetch("./data.json")
         }
         let stringlullul = '';
         stringlullul += `
-        <section class="comment-section main-comment ${comment.id}">
-            <div class="comment-box">
+        <section class="comment-section main-comment">
+            <div class="comment-box" data-id="${comment.id}">
                 <div class="comment">
                     <div class="comment-info">
                         <img class="profile-picture" src="${comment.user.image.png}" alt="Profile Picture">
@@ -211,23 +211,58 @@ const commentReply = document.querySelectorAll(".comment-reply")
 const postNewComment = document.querySelector(".post-new-comment")
 const sendButton = document.querySelector(".post-comment-btn")
 
+// const pageAccessedByReload = (
+//     (window.performance.navigation && window.performance.navigation.type === 1) ||
+//       window.performance
+//         .getEntriesByType('navigation')
+//         .map((nav) => nav.type)
+//         .includes('reload')
+//   );
+
+// const refressLul = document.querySelector(".refresh-div")
+// if(pageAccessedByReload === true) {
+//   console.log("lul");
+//   refressLul.innerHTML = localStorage.getItem("newPage"); 
+// }
+
 let clicked = -1;
+let counterNew;
 
-document.addEventListener('click', function (event) {
-	if (event.target.matches('.reply-btn')) {
-		console.log('Not working :(');
-	}
-});
-document.addEventListener('click', function (event) {
-	if (event.target.matches('.delete-btn')) {
-		console.log('A button as clicked.');
-	}
-});
-
+let timePosted = [];
+let newTimePosted = [];
+let randomArray = [60, 8, 3, 15, 9, 4];
+for(let i=0;i<randomArray.length;i++) {
+    getPreviousDay();
+    function getPreviousDay(date = new Date()) {
+        const previous = new Date(date.getTime());
+        previous.setDate(date.getDate() - randomArray[i]);
+        return previous;
+    }
+    timePosted.push(getPreviousDay());
+}
+// const eventBoxReal = document.querySelectorAll(".comment-box");
+// for(let i=0;i<eventBoxReal.length;i++) {
+//     counterNew = i;
+//     let secondsValue = timeCalculationNew();
+//     eventBoxReal[i].setAttribute("data-seconds" , `${secondsValue}`);
+// }
+let arrayCounter;
+// timePosted.sort((a, b) => a - b);
+function timeCalculationNew() {
+    let startTime = timePosted[counterNew];
+    let currentTime = new Date();
+    let timeDiff;
+    let endTimeTotal = currentTime - startTime;
+    timeDiff = Math.round(endTimeTotal/1000);
+    return timeDiff;
+}
+const arrayNumber = document.querySelectorAll(".comment-box");
 for(let i=0;i<replyCommentButton.length;i++) {
 
     replyCommentButton[i].addEventListener('click', () => {
         clicked = clicked + 1;
+        arrayCounter = arrayNumber.length;
+        arrayCounter = arrayCounter + 1;
         const userUsername = document.querySelector(".user-username")
         const userProfilePicture = document.querySelector(".user-profile-picture")
         // const replyReply = document.querySelectorAll(".reply-reply-btn")
@@ -241,6 +276,7 @@ for(let i=0;i<replyCommentButton.length;i++) {
                 commentSplitNew[j] = `<span class="at-span user-reply-at user-at-span user-at-span-new">${commentSplitNew[j]}</span>`;
             }
         }
+        // coommentPostedAt();
         let dudFinal = commentSplitNew.join(" ");
         let appendReply;
         appendReply = document.createElement('div');
@@ -248,13 +284,13 @@ for(let i=0;i<replyCommentButton.length;i++) {
         commentReply[i].classList.remove("hidden");
         appendReply.innerHTML += `
         <section class="comment-section reply-comment user-comment user-comment-new user-posted-reply">
-                    <div class="comment-box user-comment-box">
+                    <div class="comment-box user-comment-box" data-seconds="" data-id="${arrayCounter}">
                         <div class="comment user-comment-grid user-comment-grid-new">
                             <div class="comment-info">
                                 <img class="profile-picture" src="${userPictureValue}" alt="Profile Picture">
                                 <p class="profile-name">${userUsernameValue}</p>
                                 <p class="you">You</p>
-                                <p class="time-posted">now</p>
+                                <p class="time-posted">Now</p>
                             </div>
                             <div class="comment-content user-comment-content">
                                 <p class="edited-comment user-edited-comment edited-comment-new">
@@ -290,11 +326,24 @@ for(let i=0;i<replyCommentButton.length;i++) {
             commentReply[i].parentNode.parentNode.appendChild(appendReply);
         } else {
             commentReply[i].appendChild(appendReply);
-            console.log(commentReply[i].parentNode.parentNode);
         }
+        const htmlContent = document.querySelector(".refresh-div").innerHTML;
+        console.log(htmlContent)
+        localStorage.setItem('newPage', htmlContent);
+        findTest();
+        coommentPostedAt();
     })
 }
-
+// const testlul = document.querySelectorAll(".comment-box")
+// document.addEventListener('click', (e) => {
+//     if(e.target.matches(".comment-box")) {
+//         let targetLul = e.target;
+//         let list_items = Array.from(testlul);
+//         console.log(list_items)
+//         console.log(list_items.indexOf(targetLul))
+//     }
+// })
+// console.log(testlul.findIndex("data-id" , `${targetLul.dataset.id}`));
 let commentSectionNumber = 0;
 
 upvotedownvoteButton();
@@ -330,7 +379,7 @@ function upvotedownvoteButton() {
         }
     });
     document.addEventListener('click', function (event) {
-        if (event.target.matches('.upvote-downvote')) {
+        if (event.target.matches('.downvote-svg')) {
             let downvoteParent = event.target.parentNode.parentNode;
             const upDownNumberLul = downvoteParent.querySelector(".upvote-downvote-number")
             const downvoteButtonLul = downvoteParent.querySelector(".downvote-btn")
@@ -357,7 +406,7 @@ function upvotedownvoteButton() {
 }
 
 document.addEventListener('click', function (event) {
-	if (event.target.matches('.reply-p')) {
+	if (event.target.closest('.reply-btn')) {
         let replyParent = event.target.parentNode.parentNode.parentNode;
         const replyTextAreaLul = replyParent.querySelector(".comment-reply-reply")
         const profileNameLul = replyParent.querySelector(".profile-name")
@@ -375,7 +424,7 @@ editFunction();
 function editFunction() {                                                                    // IZMENI
 
     document.addEventListener('click', function (event) {
-        if (event.target.matches('.edit-span')) {
+        if (event.target.closest('.edit-btn')) {
             let editParent = event.target.parentNode.parentNode.parentNode;
             const userAtSpanLul = editParent.querySelector(".user-at-span")
             const commentGridLul = editParent.querySelector(".user-comment-grid")
@@ -401,7 +450,7 @@ function editFunction() {                                                       
 }
 
 document.addEventListener('click', function (event) {                                                              // IZMENI
-	if (event.target.matches('.update-btn')) {
+	if (event.target.closest('.update-btn')) {
         let updateParent = event.target.parentNode.parentNode;
         const editedCommentLul = updateParent.querySelector(".edited-comment")
         const editCommentLul = updateParent.querySelector(".edit-comment")
@@ -427,7 +476,7 @@ let ran = 0;
 deleteFunction();
 function deleteFunction() {
     document.addEventListener('click', function (event) {
-        if (event.target.matches('.delete-span')) {
+        if (event.target.closest('.delete-btn')) {
             blackBg.classList.remove("hidden");
             deleteComment.classList.remove("hidden");
             body.classList.add("overflow-none");
@@ -454,21 +503,22 @@ sendButton.addEventListener('click', () => {
     const userSendComment = document.querySelector(".user-send-comment")
     // const replyReply = document.querySelectorAll(".reply-reply-btn")
 
+    arrayCounter = arrayCounter + 1;
     let userUsernameValue = userUsername.innerHTML;
     let userPictureValue = userProfilePicture.src;
     let dud = userSendComment.value;
-    // let commentSplitNew = dud.split(" ");
-    // for(let j=0;j<commentSplitNew.length;j++) {
-    //     if((commentSplitNew[j].startsWith("@")) && (commentSplitNew[j].length > 1)) {
-    //         commentSplitNew[j] = `<span class="at-span user-reply-at user-at-span user-at-span-new">${commentSplitNew[j]}</span>`;
-    //     }
-    // }
-    // let dudFinal = commentSplitNew.join(" ");
+    let commentSplitNew = dud.split(" ");
+    for(let j=0;j<commentSplitNew.length;j++) {
+        if((commentSplitNew[j].startsWith("@")) && (commentSplitNew[j].length > 1)) {
+            commentSplitNew[j] = `<span class="at-span user-reply-at user-at-span user-at-span-new">${commentSplitNew[j]}</span>`;
+        }
+    }
+    let dudFinal = commentSplitNew.join(" ");
     let appendReply;
     appendReply = document.createElement('div');
     appendReply.innerHTML += `
     <section class="comment-section user-comment user-comment-new user-posted-reply">
-        <div class="comment-box user-comment-box">
+        <div class="comment-box user-comment-box" data-id="${arrayCounter}">
             <div class="comment user-comment-grid user-comment-grid-new">
                 <div class="comment-info">
                     <img class="profile-picture" src="${userPictureValue}" alt="Profile Picture">
@@ -478,7 +528,7 @@ sendButton.addEventListener('click', () => {
                 </div>
                 <div class="comment-content user-comment-content">
                     <p class="edited-comment user-edited-comment edited-comment-new">
-                    <span class="at-span user-reply-at user-at-span user-at-span-new"></span> <span class="user-comment-content-p user-content-span user-content-span-new">${dud}</span>
+                    ${dudFinal}
                     </p>
                     <textarea name="edit-comment" id="edit-comment" class="add-comment edit-comment edit-comment-new hidden">
 
@@ -508,10 +558,123 @@ sendButton.addEventListener('click', () => {
     `;
     commentContainer.appendChild(appendReply);
     userSendComment.value = "";
+    findTest();
+    coommentPostedAt();
 })
 for(let i=0;i<replyButton.length;i++) {
     cancelCommentButton[i].addEventListener('click', () => {
         replyTextArea[i].classList.add("hidden");
     })
 }
+let indexOfDiv;
+function findTest() {
+    const findLul = document.querySelectorAll(".comment-box")
+    findLul.forEach( e => {
+        if(Number(e.dataset.id) === arrayCounter) {
+        console.log(e)
+        let targetLul = e;
+        let list_items = Array.from(findLul);
+        console.log(list_items)
+        indexOfDiv = list_items.indexOf(targetLul);
+        console.log(arrayCounter)
+    }
+    })
+    console.log("IndexOfDiv: " + indexOfDiv)
+}
+console.log("IndexOfDiv: " + indexOfDiv)
+
+function coommentPostedAt() {
+    let postedAt = new Date();
+    timePosted.splice(indexOfDiv, 0, postedAt);
+    console.log(timePosted)
+}
+let counter = -1;
+function timeCalculation() {
+    let startTime = timePosted[counter];
+    let currentTime = new Date();
+    let timeDiff;
+    let endTimeTotal = currentTime - startTime;
+    timeDiff = Math.round(endTimeTotal/1000);
+    return timeDiff;
+}
+const lalala = document.querySelector(".refresh-button");
+lalala.addEventListener("click", function() {
+    counter = -1;
+    const eventBox = document.querySelectorAll(".comment-box");
+    eventBox.forEach( e => {
+        counter = counter + 1;
+        let timeDiff = timeCalculation();
+        let timeValue;
+        let minutes = Math.floor(timeDiff/60);
+        let hours = Math.floor(minutes/60);
+        let days = Math.floor(hours/24);
+        let months = Math.floor(days/30);
+        if(timeDiff === 0) {
+            timeValue = "Now";
+        } else if((timeDiff > 0) && (timeDiff < 60)) {
+            if(timeDiff === 1) {
+                timeValue = `${timeDiff} second ago`;
+            } else {
+                timeValue = `${timeDiff} seconds ago`;
+            }
+        } else if ((minutes >= 1) && (minutes < 60)) {
+            if(minutes === 1) {
+                timeValue = `${minutes} minute ago`;
+            } else {
+                timeValue = `${minutes} minutes ago`;
+            }
+        } else if((hours >= 1) && (hours < 24)) {
+            if(hours === 1) {
+                timeValue = `${hours} hour ago`;
+            } else {
+                timeValue = `${hours} hours ago`;
+            }
+        } else if((days >= 1) && (days < 7)) {
+            if(days === 1) {
+                timeValue = `${days} day ago`;
+            } else {
+                timeValue = `${days} days ago`;
+            }
+        } else if((days >= 7) && (days < 31)) { 
+            if((days >= 7) && (days < 14)) {
+                timeValue = `1 week ago`;
+            } else if((days >= 14) && (days < 21)) {
+                timeValue = `2 weeks ago`;
+            } else if((days >= 21) && (days < 28)) {
+                timeValue = `3 weeks ago`;
+            } else if((days >= 28) && (days < 31)) {
+                timeValue = `4 weeks ago`;
+            } 
+        } else if((months >= 1) && (months < 12)) {
+            if(months === 1) {
+                timeValue = `${months} month ago`;
+            } else {
+                timeValue = `${months} months ago`;
+            }
+        }
+        e.querySelector(".time-posted").innerHTML = timeValue;
+    })
+})
+// const pageAccessedByReload = (
+//     (window.performance.navigation && window.performance.navigation.type === 1) ||
+//       window.performance
+//         .getEntriesByType('navigation')
+//         .map((nav) => nav.type)
+//         .includes('reload')
+//   );
+//   const refressLul = document.querySelector(".refresh-div")
+//   if(pageAccessedByReload === true) {
+//     console.log("lul");
+//     refressLul.innerHTML = localStorage.getItem("newPage"); 
+//   }
+
+//   document.addEventListener('click', function (event) {
+//     console.log("lul");
+//     let str = document.querySelector("body");
+//     str.innerHTML = localStorage.getItem("newPage");
+//     var parser = new DOMParser();
+// 	var doc = parser.parseFromString(str, 'text/html');
+//     doc.body;
+// });
+
 }
