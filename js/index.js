@@ -185,50 +185,40 @@ fetch("./data.json")
 })
 
 function mainScript() {
-const deleteButton = document.querySelectorAll(".delete-btn")
 const blackBg = document.querySelector(".black-bg")
 const deleteComment = document.querySelector(".delete-comment-container")
 const body = document.body;
 const cancelButton = document.querySelector(".cancel")
 
-const upvoteButton = document.querySelectorAll(".upvote-btn")
-const downvoteButton = document.querySelectorAll(".downvote-btn")
-const updownNumber = document.querySelectorAll(".upvote-downvote-number")
 
 const replyButton = document.querySelectorAll(".reply-btn")
 const replyTextArea = document.querySelectorAll(".comment-reply-reply")
 const addReply = document.querySelectorAll(".add-reply")
-const profileName = document.querySelectorAll(".profile-name")
 const cancelCommentButton = document.querySelectorAll(".cancel-btn")
 const deleteConfirmButton = document.querySelector(".delete")
-const editButton = document.querySelectorAll(".edit-btn")
-
-const commentSection = document.querySelectorAll(".comment-section")
-const userComment = document.querySelectorAll(".user-comment")
-const commentContent = document.querySelectorAll(".comment-content")
-const userCommentContent = document.querySelectorAll(".user-comment-content")
-const editComment = document.querySelectorAll(".edit-comment")
-const userReplyAt = document.querySelectorAll(".user-reply-at")
-const userCommentP = document.querySelectorAll(".user-comment-content-p")
-const userAtSpan = document.querySelectorAll(".user-at-span")
-const userContentSpan = document.querySelectorAll(".user-content-span")
-const updateButton = document.querySelectorAll(".update-btn")
-const commentGrid = document.querySelectorAll(".user-comment-grid")
-const editedComment = document.querySelectorAll(".edited-comment")
 
 const replyCommentButton = document.querySelectorAll(".reply-button")
-const addComment = document.querySelectorAll(".add-comment")
-const postComment = document.querySelectorAll(".post-comment")
 const commentReply = document.querySelectorAll(".comment-reply")
 
-const postNewComment = document.querySelector(".post-new-comment")
 const sendButton = document.querySelector(".post-comment-btn")
 
-let clicked = -1;
-let counterNew;
+const pageAccessedByReload = (
+    (window.performance.navigation && window.performance.navigation.type === 1) ||
+      window.performance
+        .getEntriesByType('navigation')
+        .map((nav) => nav.type)
+        .includes('reload')
+  );
 
+let clicked = -1;
+
+let arrayCounter;
+let savedArray;
+let getSaved;
 let timePosted = [];
-let newTimePosted = [];
+let timePostedArray = [];
+console.log(timePosted)
+console.log(timePostedArray)
 let randomArray = [60, 8, 3, 15, 9, 4];
 for(let i=0;i<randomArray.length;i++) {
     getPreviousDay();
@@ -239,22 +229,20 @@ for(let i=0;i<randomArray.length;i++) {
     }
     timePosted.push(getPreviousDay());
 }
-// const eventBoxReal = document.querySelectorAll(".comment-box");
-// for(let i=0;i<eventBoxReal.length;i++) {
-//     counterNew = i;
-//     let secondsValue = timeCalculationNew();
-//     eventBoxReal[i].setAttribute("data-seconds" , `${secondsValue}`);
-// }
-let arrayCounter;
-
-function timeCalculationNew() {
-    let startTime = timePosted[counterNew];
-    let currentTime = new Date();
-    let timeDiff;
-    let endTimeTotal = currentTime - startTime;
-    timeDiff = Math.round(endTimeTotal/1000);
-    return timeDiff;
+if(pageAccessedByReload === true) {
+    timePosted = [];
+    console.log("lul");
+    getSaved = localStorage.getItem("timePosted");
+    timePostedArray = JSON.parse(getSaved);
+    console.log(timePostedArray)
+    timePostedArray.forEach( e => {
+        let datelul = new Date(e)
+        console.log(datelul)
+        timePosted.push(datelul);
+    })
+    console.log(timePosted);
 }
+const refressLul = document.querySelector(".refresh-div")
 
 let userUsernameValue;
 let userPictureValue;
@@ -268,7 +256,6 @@ for(let i=0;i<replyCommentButton.length;i++) {
         arrayCounter = arrayCounter + 1;
         const userUsername = document.querySelector(".user-username")
         const userProfilePicture = document.querySelector(".user-profile-picture")
-        // const replyReply = document.querySelectorAll(".reply-reply-btn")
 
         userUsernameValue = userUsername.innerHTML;
         userPictureValue = userProfilePicture.src;
@@ -279,7 +266,6 @@ for(let i=0;i<replyCommentButton.length;i++) {
                 commentSplitNew[j] = `<span class="at-span user-reply-at user-at-span user-at-span-new">${commentSplitNew[j]}</span>`;
             }
         }
-        // coommentPostedAt();
         let dudFinal = commentSplitNew.join(" ");
         let appendReply;
         appendReply = document.createElement('div');
@@ -430,6 +416,8 @@ function upvotedownvoteButton() {
                     upvoteButtonLul.classList.add("up-active");
                 }
             }
+            const htmlContent = document.querySelector(".refresh-div").innerHTML;
+            localStorage.setItem('newPage', htmlContent);
         }
     });
     document.addEventListener('click', function (event) {
@@ -455,6 +443,8 @@ function upvotedownvoteButton() {
                     downvoteButtonLul.classList.add("down-active");
                 }
             }
+            const htmlContent = document.querySelector(".refresh-div").innerHTML;
+            localStorage.setItem('newPage', htmlContent);
         }
     });
 }
@@ -472,8 +462,6 @@ document.addEventListener('click', function (event) {
 	}
 });
 
-let profileNameValue;
-let userCommentValue;
 editFunction();
 function editFunction() {                                                                    // IZMENI
 
@@ -499,6 +487,8 @@ function editFunction() {                                                       
             // editCommentLul.value = `${profileNameValue} ${userCommentValue} `;
             editCommentLul.value = editedCommentLul.textContent.trim();
             editCommentLul.focus();
+            const htmlContent = document.querySelector(".refresh-div").innerHTML;
+            localStorage.setItem('newPage', htmlContent);
         }
     });
 }
@@ -523,6 +513,8 @@ document.addEventListener('click', function (event) {                           
         editedCommentLul.classList.remove("hidden");
         updateButtonLul.classList.add("hidden");
         editCommentLul.classList.add("hidden");
+        const htmlContent = document.querySelector(".refresh-div").innerHTML;
+        localStorage.setItem('newPage', htmlContent);
 	}
 });
 
@@ -548,6 +540,8 @@ function deleteFunction() {
         blackBg.classList.add("hidden");
         deleteComment.classList.add("hidden");
         body.classList.remove("overflow-none");
+        const htmlContent = document.querySelector(".refresh-div").innerHTML;
+        localStorage.setItem('newPage', htmlContent);
     })
 }
 sendButton.addEventListener('click', () => {
@@ -555,7 +549,6 @@ sendButton.addEventListener('click', () => {
     const userProfilePicture = document.querySelector(".user-profile-picture")
     const commentContainer = document.querySelector(".comments-container-maybe")
     const userSendComment = document.querySelector(".user-send-comment")
-    // const replyReply = document.querySelectorAll(".reply-reply-btn")
 
     arrayCounter = arrayCounter + 1;
     let userUsernameValue = userUsername.innerHTML;
@@ -642,6 +635,9 @@ console.log("IndexOfDiv: " + indexOfDiv)
 function coommentPostedAt() {
     let postedAt = new Date();
     timePosted.splice(indexOfDiv, 0, postedAt);
+    timePostedArray = timePosted;
+    savedArray = JSON.stringify(timePostedArray);
+    localStorage.setItem('timePosted', savedArray)
 }
 let counter = -1;
 function timeCalculation() {
@@ -653,7 +649,12 @@ function timeCalculation() {
     return timeDiff;
 }
 const lalala = document.querySelector(".refresh-button");
-lalala.addEventListener("click", function() {
+// lalala.addEventListener("click", function() {
+if(pageAccessedByReload === true) {
+    reloadTimeCounter();
+    console.log(timePosted)
+}
+function reloadTimeCounter() {
     counter = -1;
     const eventBox = document.querySelectorAll(".comment-box");
     eventBox.forEach( e => {
@@ -709,27 +710,7 @@ lalala.addEventListener("click", function() {
         }
         e.querySelector(".time-posted").innerHTML = timeValue;
     })
-})
-// const pageAccessedByReload = (
-//     (window.performance.navigation && window.performance.navigation.type === 1) ||
-//       window.performance
-//         .getEntriesByType('navigation')
-//         .map((nav) => nav.type)
-//         .includes('reload')
-//   );
-//   const refressLul = document.querySelector(".refresh-div")
-//   if(pageAccessedByReload === true) {
-//     console.log("lul");
-//     refressLul.innerHTML = localStorage.getItem("newPage"); 
-//   }
-
-//   document.addEventListener('click', function (event) {
-//     console.log("lul");
-//     let str = document.querySelector("body");
-//     str.innerHTML = localStorage.getItem("newPage");
-//     var parser = new DOMParser();
-// 	var doc = parser.parseFromString(str, 'text/html');
-//     doc.body;
-// });
+}
+// })
 
 }
