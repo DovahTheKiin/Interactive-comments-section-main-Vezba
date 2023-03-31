@@ -217,25 +217,32 @@ let savedArray;
 let getSaved;
 let timePosted = [];
 let timePostedArray = [];
+let randomLulArray = [];
 console.log(timePosted)
 console.log(timePostedArray)
-let randomArray = [60, 8, 3, 15, 9, 4];
-for(let i=0;i<randomArray.length;i++) {
-    getPreviousDay();
-    function getPreviousDay(date = new Date()) {
-        const previous = new Date(date.getTime());
-        previous.setDate(date.getDate() - randomArray[i]);
-        return previous;
+let run_code = true;
+if(pageAccessedByReload === true) {
+    run_code = false;
+}
+if(run_code === true) {
+    let randomArray = [60, 8, 3, 15, 9, 4];
+    for(let i=0;i<randomArray.length;i++) {
+        getPreviousDay();
+        function getPreviousDay(date = new Date()) {
+            const previous = new Date(date.getTime());
+            previous.setDate(date.getDate() - randomArray[i]);
+            return previous;
+        }
+        timePosted.push(getPreviousDay());
     }
-    timePosted.push(getPreviousDay());
 }
 if(pageAccessedByReload === true) {
     timePosted = [];
     console.log("lul");
     getSaved = localStorage.getItem("timePosted");
-    timePostedArray = JSON.parse(getSaved);
-    console.log(timePostedArray)
-    timePostedArray.forEach( e => {
+    randomLulArray = JSON.parse(getSaved);
+    console.log(randomLulArray)
+    randomLulArray.forEach( e => {
         let datelul = new Date(e)
         console.log(datelul)
         timePosted.push(datelul);
@@ -527,7 +534,6 @@ function deleteFunction() {
             deleteComment.classList.remove("hidden");
             body.classList.add("overflow-none");
             commentSectionNumber = event.target.parentNode.parentNode.parentNode;
-            console.log(commentSectionNumber)
         }
     });
     cancelButton.addEventListener('click', () => {
@@ -536,7 +542,7 @@ function deleteFunction() {
         body.classList.remove("overflow-none");
     })
     deleteConfirmButton.addEventListener('click', () => {
-        commentSectionNumber.classList.add("hidden");
+        commentSectionNumber.classList.add("hidden");                                   /////////////////////// ???????????????????????
         blackBg.classList.add("hidden");
         deleteComment.classList.add("hidden");
         body.classList.remove("overflow-none");
@@ -550,6 +556,7 @@ sendButton.addEventListener('click', () => {
     const commentContainer = document.querySelector(".comments-container-maybe")
     const userSendComment = document.querySelector(".user-send-comment")
 
+    arrayCounter = arrayNumber.length;
     arrayCounter = arrayCounter + 1;
     let userUsernameValue = userUsername.innerHTML;
     let userPictureValue = userProfilePicture.src;
@@ -637,6 +644,9 @@ function coommentPostedAt() {
     timePosted.splice(indexOfDiv, 0, postedAt);
     timePostedArray = timePosted;
     savedArray = JSON.stringify(timePostedArray);
+    if(pageAccessedByReload === true) {
+        localStorage.removeItem('timePosted');
+    }
     localStorage.setItem('timePosted', savedArray)
 }
 let counter = -1;
