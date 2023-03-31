@@ -331,7 +331,6 @@ for(let i=0;i<replyCommentButton.length;i++) {
             commentReply[i].appendChild(appendReply);
         }
         const htmlContent = document.querySelector(".refresh-div").innerHTML;
-        // console.log(htmlContent)
         localStorage.setItem('newPage', htmlContent);
         findTest();
         coommentPostedAt();
@@ -613,6 +612,8 @@ sendButton.addEventListener('click', () => {
     `;
     commentContainer.appendChild(appendReply);
     userSendComment.value = "";
+    const htmlContent = document.querySelector(".refresh-div").innerHTML;
+    localStorage.setItem('newPage', htmlContent);
     findTest();
     coommentPostedAt();
 })
