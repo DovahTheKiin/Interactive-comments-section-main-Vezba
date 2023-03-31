@@ -168,6 +168,19 @@ fetch("./data.json")
         repliesOut = "";
     }
 }).then(function () {
+    const pageAccessedByReload = (
+        (window.performance.navigation && window.performance.navigation.type === 1) ||
+          window.performance
+            .getEntriesByType('navigation')
+            .map((nav) => nav.type)
+            .includes('reload')
+      );
+    
+    const refressLul = document.querySelector(".refresh-div")
+    if(pageAccessedByReload === true) {
+      console.log("lul");
+      refressLul.innerHTML = localStorage.getItem("newPage"); 
+    }
     mainScript();
 })
 
@@ -211,20 +224,6 @@ const commentReply = document.querySelectorAll(".comment-reply")
 const postNewComment = document.querySelector(".post-new-comment")
 const sendButton = document.querySelector(".post-comment-btn")
 
-// const pageAccessedByReload = (
-//     (window.performance.navigation && window.performance.navigation.type === 1) ||
-//       window.performance
-//         .getEntriesByType('navigation')
-//         .map((nav) => nav.type)
-//         .includes('reload')
-//   );
-
-// const refressLul = document.querySelector(".refresh-div")
-// if(pageAccessedByReload === true) {
-//   console.log("lul");
-//   refressLul.innerHTML = localStorage.getItem("newPage"); 
-// }
-
 let clicked = -1;
 let counterNew;
 
@@ -247,7 +246,7 @@ for(let i=0;i<randomArray.length;i++) {
 //     eventBoxReal[i].setAttribute("data-seconds" , `${secondsValue}`);
 // }
 let arrayCounter;
-// timePosted.sort((a, b) => a - b);
+
 function timeCalculationNew() {
     let startTime = timePosted[counterNew];
     let currentTime = new Date();
@@ -256,6 +255,10 @@ function timeCalculationNew() {
     timeDiff = Math.round(endTimeTotal/1000);
     return timeDiff;
 }
+
+let userUsernameValue;
+let userPictureValue;
+
 const arrayNumber = document.querySelectorAll(".comment-box");
 for(let i=0;i<replyCommentButton.length;i++) {
 
@@ -267,8 +270,8 @@ for(let i=0;i<replyCommentButton.length;i++) {
         const userProfilePicture = document.querySelector(".user-profile-picture")
         // const replyReply = document.querySelectorAll(".reply-reply-btn")
 
-        let userUsernameValue = userUsername.innerHTML;
-        let userPictureValue = userProfilePicture.src;
+        userUsernameValue = userUsername.innerHTML;
+        userPictureValue = userProfilePicture.src;
         let dud = addReply[i].value;
         let commentSplitNew = dud.split(" ");
         for(let j=0;j<commentSplitNew.length;j++) {
@@ -328,12 +331,64 @@ for(let i=0;i<replyCommentButton.length;i++) {
             commentReply[i].appendChild(appendReply);
         }
         const htmlContent = document.querySelector(".refresh-div").innerHTML;
-        console.log(htmlContent)
+        // console.log(htmlContent)
         localStorage.setItem('newPage', htmlContent);
         findTest();
         coommentPostedAt();
     })
 }
+// let nameJson;
+// document.addEventListener('click', function (event) {
+// 	if (event.target.closest('.reply-btn')) {
+//         let replyParent = event.target.parentNode.parentNode.parentNode;
+//         const namelul = replyParent.querySelector(".profile-name")
+//         nameJson = namelul.innerHTML;
+//         console.log(nameJson)
+//     }
+// })
+
+// function newJsonTest() {
+//     const findLul = document.querySelectorAll(".comment-box")
+//     let indexOfDivLul;
+//     findLul.forEach( e => {
+//         if(Number(e.dataset.id) === arrayCounter) {
+//             // console.log(e)
+//             let targetLul = e;
+//             let list_items = Array.from(findLul);
+//             // console.log(list_items)
+//             indexOfDivLul = list_items.indexOf(targetLul);
+//             // console.log(arrayCounter)
+//         }
+//     })
+//     const commentboxlul = document.querySelectorAll(".comment-box")
+//     const chosenBox = commentboxlul[indexOfDivLul];
+//     const contentlul = chosenBox.querySelector(".edited-comment")
+//     const postedlul = chosenBox.querySelector(".time-posted")
+//     const scorelul = chosenBox.querySelector(".upvote-downvote-number")
+//     const pplul = chosenBox.querySelector(".profile-picture")
+//     console.log(contentlul)
+//     let deletus = pplul.src;
+//     let str = deletus.substring(deletus.indexOf('/images/'));
+//     // let strlul = contentlul.textContent.trim()
+//     // strlul = strlul.split('@').splice(1).join('.');
+//     console.log(str);
+
+//     const comment = {
+//         id : arrayCounter,
+//         content : contentlul.textContent.trim(),
+//         createdAt : postedlul.innerHTML,
+//         score : scorelul.innerHTML,
+//         replyingTo: nameJson,
+//         user : {
+//             image : { 
+//               png : str,
+//               webp : ""
+//             },
+//             username : userUsernameValue
+//           },
+//     }
+//     console.log(comment)
+// }
 // const testlul = document.querySelectorAll(".comment-box")
 // document.addEventListener('click', (e) => {
 //     if(e.target.matches(".comment-box")) {
@@ -571,12 +626,12 @@ function findTest() {
     const findLul = document.querySelectorAll(".comment-box")
     findLul.forEach( e => {
         if(Number(e.dataset.id) === arrayCounter) {
-        console.log(e)
+        // console.log(e)
         let targetLul = e;
         let list_items = Array.from(findLul);
-        console.log(list_items)
+        // console.log(list_items)
         indexOfDiv = list_items.indexOf(targetLul);
-        console.log(arrayCounter)
+        // console.log(arrayCounter)
     }
     })
     console.log("IndexOfDiv: " + indexOfDiv)
@@ -586,7 +641,6 @@ console.log("IndexOfDiv: " + indexOfDiv)
 function coommentPostedAt() {
     let postedAt = new Date();
     timePosted.splice(indexOfDiv, 0, postedAt);
-    console.log(timePosted)
 }
 let counter = -1;
 function timeCalculation() {
