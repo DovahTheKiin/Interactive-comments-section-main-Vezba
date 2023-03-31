@@ -336,9 +336,6 @@ textarea {
 .edit-comment {
     width: 100%;
 }
-.refresh-button {
-    display: none;
-}
 @media (min-width: 700px) {
     body {
         width: 100%;
@@ -451,12 +448,6 @@ textarea {
         margin-top: 0.8rem;
         width: fit-content;
         justify-self: end;
-    }
-    .refresh-button {
-        display: block;
-        position: fixed;
-        top: 20px;
-        right: 200px;
     }
 }
 
