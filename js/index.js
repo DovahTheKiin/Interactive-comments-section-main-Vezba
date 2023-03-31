@@ -240,6 +240,7 @@ if(pageAccessedByReload === true) {
     timePosted = [];
     console.log("lul");
     getSaved = localStorage.getItem("timePosted");
+    console.log(getSaved)
     randomLulArray = JSON.parse(getSaved);
     console.log(randomLulArray)
     randomLulArray.forEach( e => {
@@ -524,16 +525,32 @@ document.addEventListener('click', function (event) {                           
         localStorage.setItem('newPage', htmlContent);
 	}
 });
-
-let ran = 0;
+let commentSectionNumberNumber;
+let indexOfDivDiv;
+// let randomArrayLul = [1, 2, 3, 4, 5];
+// randomArrayLul.splice(1, 1);
+// console.log(randomArrayLul);
 deleteFunction();
 function deleteFunction() {
     document.addEventListener('click', function (event) {
         if (event.target.closest('.delete-btn')) {
+            const findLul = document.querySelectorAll(".comment-box")
             blackBg.classList.remove("hidden");
             deleteComment.classList.remove("hidden");
             body.classList.add("overflow-none");
             commentSectionNumber = event.target.parentNode.parentNode.parentNode;
+            commentSectionNumberNumber = event.target.parentNode.parentNode.parentNode.parentNode;
+            findLul.forEach( e => {
+                    // console.log(e)
+                    let targetLul = commentSectionNumber;
+                    let list_items = Array.from(findLul);
+                    // console.log(list_items)
+                    indexOfDivDiv = list_items.indexOf(targetLul);
+                    console.log(indexOfDivDiv);
+                    // console.log(arrayCounter)
+            })  
+            console.log(commentSectionNumberNumber)
+            console.log(timePosted);
         }
     });
     cancelButton.addEventListener('click', () => {
@@ -542,13 +559,37 @@ function deleteFunction() {
         body.classList.remove("overflow-none");
     })
     deleteConfirmButton.addEventListener('click', () => {
+        const findLul = document.querySelectorAll(".comment-box")
+        for(let i=0;i<findLul.length;i++) {
+            if(i === indexOfDivDiv) {
+                commentSectionNumberNumber.remove();
+            }
+        }
         commentSectionNumber.classList.add("hidden");                                   /////////////////////// ???????????????????????
         blackBg.classList.add("hidden");
         deleteComment.classList.add("hidden");
         body.classList.remove("overflow-none");
+        timePosted.splice(indexOfDivDiv, 1);
+        arrayCounter = arrayCounter - 1;
+        console.log(timePosted);
         const htmlContent = document.querySelector(".refresh-div").innerHTML;
         localStorage.setItem('newPage', htmlContent);
+        timePostedArray = timePosted;
+        console.log(timePostedArray)
+        savedArray = JSON.stringify(timePostedArray);
+        localStorage.setItem('timePosted', savedArray);
     })
+    // const findLul = document.querySelectorAll(".comment-box")
+    // findLul.forEach( e => {
+    //     if(Number(e.dataset.id) === arrayCounter) {
+    //         // console.log(e)
+    //         let targetLul = e;
+    //         let list_items = Array.from(findLul);
+    //         // console.log(list_items)
+    //         indexOfDiv = list_items.indexOf(targetLul);
+    //         // console.log(arrayCounter)
+    //     }
+    // })  
 }
 sendButton.addEventListener('click', () => {
     const userUsername = document.querySelector(".user-username")
